@@ -10,6 +10,7 @@ moves = ['rock', 'paper', 'scissors']
 """The Player class is the parent class for all of the Players
 in this game"""
 
+
 class Player:
     def move(self):
         return 'rock'
@@ -17,13 +18,16 @@ class Player:
     def learn(self, my_move, their_move):
         pass
 
+
 class AlwaysRockPlayer(Player):
     def move(self):
         return 'rock'
 
+
 class RandomPlayer(Player):
     def move(self):
         return random.choice(moves)
+
 
 class ImitatePlayer(Player):
     def __init__(self):
@@ -38,6 +42,7 @@ class ImitatePlayer(Player):
     def learn(self, my_move, their_move):
         self.last_opponent_move = their_move
 
+
 class CyclePlayer(Player):
     def __init__(self):
         super().__init__()
@@ -49,6 +54,7 @@ class CyclePlayer(Player):
         else:
             self.current_move = random.choice(moves)
         return self.current_move
+
 
 class Game:
     def __init__(self, p1, p2):
@@ -79,10 +85,12 @@ class Game:
         print("Game over!")
         print(f"Player 1: {self.p1_score}, Player 2: {self.p2_score}")
 
+
 def beats(one, two):
     return ((one == 'rock' and two == 'scissors') or
             (one == 'scissors' and two == 'paper') or
             (one == 'paper' and two == 'rock'))
+
 
 if __name__ == '__main__':
     game = Game(AlwaysRockPlayer(), ImitatePlayer())
