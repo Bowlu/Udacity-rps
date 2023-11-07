@@ -3,6 +3,7 @@
 """This program plays a game of Rock, Paper, Scissors between two Players,
 and reports both Player's scores each round."""
 
+
 import random
 
 moves = ['rock', 'paper', 'scissors']
@@ -56,6 +57,18 @@ class CyclePlayer(Player):
         return self.current_move
 
 
+class HumanPlayer(Player):
+    def move(self):
+        while True:
+            human_move = input("Enter your move "
+                               "(rock, paper, or scissors): ").lower()
+            if human_move in moves:
+                return human_move
+            else:
+                print("Invalid move."
+                      "Please enter 'rock', 'paper', or 'scissors.")
+
+
 class Game:
     def __init__(self, p1, p2):
         self.p1 = p1
@@ -93,5 +106,24 @@ def beats(one, two):
 
 
 if __name__ == '__main__':
-    game = Game(AlwaysRockPlayer(), ImitatePlayer())
-    game.play_game()
+    opponents = {
+        '1': AlwaysRockPlayer,
+        '2': RandomPlayer,
+        '3': ImitatePlayer,
+        '4': CyclePlayer,
+        '5': HumanPlayer
+    }
+    print("Player list:")
+    for key, value in opponents.items():
+        print(f"{key}. {value.__name__}")
+    p1_choice = input("Choose player 1: ")
+    p2_choice = input("Choose player 2: ")
+
+    if p1_choice in opponents and p2_choice in opponents:
+        p1 = opponents[p1_choice]
+        p2 = opponents[p2_choice]
+        game = Game(p1(), p2())
+        game.play_game()
+    else:
+        print("Invalid player choices."
+              "Please choose from the available options.")
