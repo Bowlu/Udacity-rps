@@ -20,11 +20,13 @@ class Player:
 
 
 class AlwaysRockPlayer(Player):
-    pass
+    def move(self):
+        return 'rock'
 
 
 class RandomPlayer(Player):
-    pass
+    def move(self):
+        return random.choice(moves)
 
 
 class ImitatePlayer(Player):
@@ -52,9 +54,6 @@ class CyclePlayer(Player):
         else:
             self.current_move = random.choice(moves)
         return self.current_move
-
-    def learn(self, my_move, their_move):
-        self.current_move = my_move
 
 
 class HumanPlayer(Player):
@@ -119,7 +118,7 @@ if __name__ == '__main__':
     print("Player list:")
     for key, value in opponents.items():
         print(f"{key}. {value.__name__}")
-    p1 = opponents[input(f"Choose player 1: ")]()
-    p2 = opponents[input(f"Choose player 2: ")]()
-    game = Game(p1, p2)
+    p1 = opponents[input(f"Choose player 1: ")]
+    p2 = opponents[input(f"Choose player 2: ")]
+    game = Game(p1(), p2())
     game.play_game()
